@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\View;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\CetakController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,19 +16,42 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
-Route::resource('admin/category', 'App\Http\Controllers\Admin\categoryController');
-Route::resource('admin/user-role', 'App\Http\Controllers\Admin\userRoleController');
-Route::resource('admin/reservation-status', 'App\Http\Controllers\Admin\reservationStatusController');
-Route::resource('admin/missing-item-status', 'App\Http\Controllers\Admin\missing-item-statusController');
-Route::resource('admin/reservation', 'App\Http\Controllers\Admin\reservationController');
-Route::resource('admin/schedule', 'App\Http\Controllers\Admin\scheduleController');
-Route::resource('admin/attendance', 'App\Http\Controllers\Admin\attendanceController');
-Route::resource('admin/replacement', 'App\Http\Controllers\Admin\replacementController');
-Route::get('/laporan/replacement',[LaporanController::class,'index']);
-Route::get('/laporan/replacement/pdf',[LaporanController::class,'cetak_pdf']);
 
+Route::get('/item', function () {
+    return view('item');
+});
+
+Route::get('/buy', function () {
+    return view('buy');
+});
+
+Route::get('/transaksi', function () {
+    return view('transaksi');
+});
+
+Route::get('buy/{id}', function ($id) {
+    return view('buy')->with('id', $id);
+});
+
+Route::get('/process.php', function () {
+    return view('process');
+});
+
+Route::get('/vendor', [LaporanController::class,'index']);
+Route::get('/vendorcetak', [LaporanController::class,'cetak_pdf']);
+
+Route::resource('user/form-products', 'App\\Http\\Controllers\\User\formProductsController');
+Route::resource('admin/form-user', 'App\\Http\\Controllers\\Admin\formUserController');
+Route::resource('admin/form-products', 'App\\Http\\Controllers\\Admin\formProductsController');
+Route::resource('admin/form-bank', 'App\\Http\\Controllers\\Admin\formBankController');
+Route::resource('admin/form-kategori', 'App\\Http\\Controllers\\Admin\formKategoriController');
+Route::resource('admin/form-cart', 'App\\Http\\Controllers\\Admin\formCartController');
+Route::resource('admin/form-transaction', 'App\\Http\\Controllers\\Admin\formTransactionController');
+Route::resource('admin/formtransaction_detail', 'App\\Http\\Controllers\\Admin\formtransaction_detailController');
+Route::resource('admin/vendor', 'App\Http\Controllers\Admin\vendorController');
+Route::resource('admin/vendor_nama', 'App\Http\Controllers\Admin\vendor_namaController');
 Route::resource('admin/room', 'App\Http\Controllers\Admin\roomController');
 Route::resource('admin/location', 'App\Http\Controllers\Admin\locationController');
