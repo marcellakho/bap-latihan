@@ -1,25 +1,22 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\replacement;
+use App\Models\query;
 use Illuminate\Http\Request;
 use PDF;
-
-
 
 class LaporanController extends Controller
 {
     public function index(){
-        $rpl = replacement::all();
-        return view('laporan/replacement',['replacement'=>$rpl]);
+        $rpl = query::all();
+        return view('query',['query'=>$rpl]);
 
     }
 
     public function cetak_pdf(){
-        $rpl = replacement::all();
-        $pdf = PDF::loadview('laporan/replacementpdf',['replacement'=>$rpl]);
+        $rpl = query::all();
+        $pdf = PDF::loadview('querypdf',['query'=>$rpl]);
 
-        return $pdf->download('laporan-replacement.pdf');
+        return $pdf->download('query');
     }
 }
